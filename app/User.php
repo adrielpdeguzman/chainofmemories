@@ -26,4 +26,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the journals of the user
+     *
+     * @return  Illuminate\Database\Eloquent\hasMany
+     */
+    public function journals()
+    {
+        return $this->hasMany('App\Journal');
+    }
 }
