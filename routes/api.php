@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 });
+Route::singularResourceParameters();
+Route::resource('journals', 'JournalController', ['only' => [
+    'index', 'store', 'show', 'update',
+]]);
