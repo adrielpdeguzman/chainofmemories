@@ -60,7 +60,22 @@ class JournalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'publish_date' => 'required|unique:journals|date',
+            'contents' => 'required',
+            'events' => 'present',
+        ]);
+
+        $journal = new Journal;
+        $journal->fill($request->only([
+            'publish_date', 'contents', 'events',
+        ]));
+        $journal->user()->associate($request->user());
+        $journal->save();
+
+        return response()
+            ->json($journal, 201)
+            ->header('Location', route('journals.show', ['journal' => $journal]));
     }
 
     /**
@@ -90,6 +105,15 @@ class JournalController extends Controller
      */
     public function update(Request $request, Journal $journal)
     {
-        //
+        $this->validate($request, [
+            'contents' => 'required',
+            'events' => 'present',
+        ]);
+
+        $journal->update($request->only([
+            'contents', 'events',
+        ]));
+
+        return response()->json($journal);
     }
 }
