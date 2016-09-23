@@ -14,6 +14,17 @@ require('laravel-elixir-vue');
  */
 
 elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+  mix.sass('app.scss')
+    .webpack('app.js')
+    .copy([
+      './node_modules/bootstrap-sass/assets/fonts'
+    ], './public/fonts')
+    .version([
+      'js/app.js',
+      'css/app.css',
+    ])
+    .browserSync({
+      notify: false,
+      proxy: 'chainofmemories.app',
+    });
 });
