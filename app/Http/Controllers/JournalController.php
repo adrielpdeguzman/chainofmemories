@@ -61,7 +61,7 @@ class JournalController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'publish_date' => 'required|unique:journals|date',
+            'publish_date' => 'required|date|unique:journals,publish_date,NULL,id,user_id,' . $request->user()->id,
             'contents' => 'required',
             'events' => 'present',
         ]);
