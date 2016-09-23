@@ -18,7 +18,10 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'journals', 'as' => 'journals.'], function () {
-    Route::get('dates_without_entry', 'JournalController@getDatesWithoutEntry');
+    Route::get('random', 'JournalController@random')
+        ->name('random');
+    Route::get('dates_without_entry', 'JournalController@getDatesWithoutEntry')
+        ->name('dates_without_entry');
 });
 
 Route::singularResourceParameters();

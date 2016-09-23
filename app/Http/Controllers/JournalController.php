@@ -118,6 +118,25 @@ class JournalController extends Controller
         return response()->json($journal);
     }
 
+    /**
+     * Get a random journal entry
+     *
+     * @return  Illuminate\Http\JsonResponse
+     */
+    public function random()
+    {
+        $journal = Journal::inRandomOrder()->first();
+
+        return response()->json($journal);
+    }
+
+    /**
+     * Get the dates without entry for current user
+     *
+     * @param   Illuminate\Http\Request  $request
+     *
+     * @return  Illuminate\Http\JsonResponse
+     */
     public function getDatesWithoutEntry(Request $request)
     {
         $datesWithEntry = array_flatten($request->user()->journals()->get(['publish_date'])
