@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'journals', 'as' => 'journals.'], function () {
+    Route::get('random', 'JournalController@random')
+        ->name('random');
+    Route::get('dates_without_entry', 'JournalController@getDatesWithoutEntry')
+        ->name('dates_without_entry');
+});
+
+Route::singularResourceParameters();
+Route::resource('journals', 'JournalController', ['only' => [
+    'index', 'store', 'show', 'update',
+]]);
