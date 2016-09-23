@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Journal;
+use Carbon\Carbon;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -115,5 +116,22 @@ class JournalController extends Controller
         ]));
 
         return response()->json($journal);
+    }
+
+    public function getDatesWithoutEntry(Request $request)
+    {
+        $datesWithEntry = array_flatten($request->user()->journals()->get(['publish_date'])
+            ->makeHidden(['volume', 'day'])->toArray());
+        $datesWithoutEntry = [];
+        $days = Carbon::now()->diffInDays(config('constants.anniversary_date'));
+
+        for ($i = 0; $i <= $days; $i++) {
+            $date = Carbon::now()->startOfDay()->subDays($i)->toDateTimeString();
+            if (!in_array($date, $datesWithEntry)) {
+                array_push($datesWithoutEntry, substr($date, 0, 10));
+            }
+        }
+
+        return response()->json($datesWithoutEntry);
     }
 }
