@@ -69,6 +69,10 @@ class Journal extends Model
     {
         $anniversaryDate = config('constants.anniversary_date');
 
+        if ($this->publish_date < $anniversaryDate) {
+            return 1;
+        }
+
         return $anniversaryDate->diffInMonths($this->publish_date) + 2;
     }
 }
