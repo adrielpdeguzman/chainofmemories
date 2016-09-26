@@ -42,7 +42,7 @@ class JournalPolicy
      */
     public function update(User $user, Journal $journal)
     {
-        return $user->id === $journal->user->id;
+        return $user->id === $journal->user_id;
     }
 
     /**

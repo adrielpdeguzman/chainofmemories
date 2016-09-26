@@ -102,6 +102,8 @@ class JournalController extends Controller
             'events' => 'present',
         ]);
 
+        $this->authorize('update', $journal);
+
         $journal->update($request->only([
             'contents', 'events',
         ]));
