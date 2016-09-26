@@ -34,6 +34,15 @@ class Journal extends Model
     ];
 
     /**
+     * The models to be eager-loaded when querying Journal
+     *
+     * @var  array
+     */
+    protected $with = [
+        'user',
+    ];
+
+    /**
      * Get the user that owns the journal entry.
      *
      * @return  Illuminate\Database\Eloquent\belongsTo

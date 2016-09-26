@@ -27,10 +27,6 @@ class JournalController extends Controller
                 ->orWhere('events', 'like', "%$q%");
         }
 
-        if ($request->has('embed')) {
-            $query = $query->with($request->input('embed'));
-        }
-
         if ($request->has('sort')) {
             $column = str_replace('-', '', $request->input('sort'));
             $direction = starts_with($request->input('sort'), '-') ? 'desc' : 'asc';
@@ -82,17 +78,12 @@ class JournalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param   Illuminate\Http\Request  $request
      * @param   Journal  $journal
      *
      * @return  Illuminate\Http\JsonResponse
      */
-    public function show(Request $request, Journal $journal)
+    public function show(Journal $journal)
     {
-        if ($request->has('embed')) {
-            return response()->json($journal->load($request->input('embed')));
-        }
-
         return response()->json($journal);
     }
 
