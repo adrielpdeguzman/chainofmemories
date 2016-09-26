@@ -3,8 +3,14 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Exception\HttpResponseException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -42,9 +48,42 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        if ($request->expectsJson()) {
+            if ($e instanceof AuthorizationException) {
+                $response = [
+                    'message'   => $e->getMessage(),
+                    'status'    => Response::HTTP_FORBIDDEN,
+                ];
+            } elseif ($e instanceof AuthenticationException) {
+                $response = [
+                    'message'   => $e->getMessage(),
+                    'status'    => Response::HTTP_UNAUTHORIZED,
+                ];
+            } elseif ($e instanceof ValidationException) {
+                $response = [
+                    'message'   => $e->validator->errors()->getMessages(),
+                    'status'    => Response::HTTP_UNPROCESSABLE_ENTITY,
+                ];
+            } else {
+                $response = [
+                    'message'   => Response::$statusTexts[$e->getStatusCode()],
+                    'status'    => $e->getStatusCode(),
+                ];
+            }
+
+             if ((boolean) env('APP_DEBUG')) {
+                $response['debug'] = [
+                    'exception' => get_class($e),
+                    'trace' => $e->getTrace()
+                ];
+            }
+
+            return response()->json(['error' => $response], $response['status']);
+        }
+
+        return parent::render($request, $e);
     }
 
     /**
