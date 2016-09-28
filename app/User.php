@@ -29,9 +29,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the journals of the user
+     * Get the journals of the user.
      *
-     * @return  Illuminate\Database\Eloquent\hasMany
+     * @return Illuminate\Database\Eloquent\hasMany
      */
     public function journals()
     {
@@ -39,11 +39,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Configure passport to use 'username' as username
+     * Configure passport to use 'username' as username.
      *
-     * @param   string  $username
+     * @param string $username
      *
-     * @return  User
+     * @return User
      */
     public function findForPassport($username)
     {

@@ -9,7 +9,7 @@ class Journal extends Model
     /**
      * The accessors to append to the model's serialized form.
      *
-     * @var  array
+     * @var array
      */
     protected $appends = [
         'day', 'volume',
@@ -18,25 +18,25 @@ class Journal extends Model
     /**
      * The attributes that should be mutated to dates.
      *
-     * @var  array
+     * @var array
      */
     protected $dates = [
-        'publish_date', 'created_at', 'updated_at'
+        'publish_date', 'created_at', 'updated_at',
     ];
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var  array
+     * @var array
      */
     protected $fillable = [
         'publish_date', 'contents', 'events',
     ];
 
     /**
-     * The models to be eager-loaded when querying Journal
+     * The models to be eager-loaded when querying Journal.
      *
-     * @var  array
+     * @var array
      */
     protected $with = [
         'user',
@@ -45,7 +45,7 @@ class Journal extends Model
     /**
      * Get the user that owns the journal entry.
      *
-     * @return  Illuminate\Database\Eloquent\belongsTo
+     * @return Illuminate\Database\Eloquent\belongsTo
      */
     public function user()
     {
@@ -53,9 +53,9 @@ class Journal extends Model
     }
 
     /**
-     * Get the day number for the journal based on publish_date
+     * Get the day number for the journal based on publish_date.
      *
-     * @return  integer
+     * @return int
      */
     public function getDayAttribute()
     {
@@ -70,9 +70,9 @@ class Journal extends Model
     }
 
     /**
-     * Get the volume number for the journal based on publish_date
+     * Get the volume number for the journal based on publish_date.
      *
-     * @return  integer
+     * @return int
      */
     public function getVolumeAttribute()
     {

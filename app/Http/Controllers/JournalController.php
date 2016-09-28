@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Journal;
 use Carbon\Carbon;
-use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,13 @@ class JournalController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
-        $query = new Journal;
+        $query = new Journal();
 
         if ($request->has('q')) {
             $q = $request->input('q');
@@ -52,18 +52,19 @@ class JournalController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'publish_date' => 'required|date|unique:journals,publish_date,NULL,id,user_id,' . $request->user()->id,
+            'publish_date' => 'required|date|unique:journals,publish_date,NULL,id,user_id,'.$request->user()->id,
             'contents' => 'required',
             'events' => 'present',
         ]);
 
-        $journal = new Journal;
+        $journal = new Journal();
         $journal->fill($request->only([
             'publish_date', 'contents', 'events',
         ]));
@@ -78,9 +79,9 @@ class JournalController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param   Journal  $journal
+     * @param Journal $journal
      *
-     * @return  Illuminate\Http\JsonResponse
+     * @return Illuminate\Http\JsonResponse
      */
     public function show(Journal $journal)
     {
@@ -90,10 +91,10 @@ class JournalController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param   Illuminate\Http\Request  $request
-     * @param   Journal  $journal
+     * @param Illuminate\Http\Request $request
+     * @param Journal                 $journal
      *
-     * @return  Illuminate\Http\JsonResponse
+     * @return Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Journal $journal)
     {
@@ -112,9 +113,9 @@ class JournalController extends Controller
     }
 
     /**
-     * Get a random journal entry
+     * Get a random journal entry.
      *
-     * @return  Illuminate\Http\JsonResponse
+     * @return Illuminate\Http\JsonResponse
      */
     public function random()
     {
@@ -124,11 +125,11 @@ class JournalController extends Controller
     }
 
     /**
-     * Get the dates without entry for current user
+     * Get the dates without entry for current user.
      *
-     * @param   Illuminate\Http\Request  $request
+     * @param Illuminate\Http\Request $request
      *
-     * @return  Illuminate\Http\JsonResponse
+     * @return Illuminate\Http\JsonResponse
      */
     public function getDatesWithoutEntry(Request $request)
     {
@@ -137,7 +138,7 @@ class JournalController extends Controller
         $datesWithoutEntry = [];
         $days = Carbon::now()->diffInDays(config('constants.anniversary_date'));
 
-        for ($i = 0; $i <= $days; $i++) {
+        for ($i = 0; $i <= $days; ++$i) {
             $date = Carbon::now()->startOfDay()->subDays($i)->toDateTimeString();
             if (!in_array($date, $datesWithEntry)) {
                 array_push($datesWithoutEntry, substr($date, 0, 10));
