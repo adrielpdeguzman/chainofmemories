@@ -56,6 +56,11 @@ class Handler extends ExceptionHandler
                     'message'   => $e->getMessage(),
                     'status'    => Response::HTTP_FORBIDDEN,
                 ];
+            } elseif ($e instanceof ModelNotFoundException) {
+                $response = [
+                    'message'   => $e->getMessage(),
+                    'status'    => Response::HTTP_NOT_FOUND,
+                ];
             } elseif ($e instanceof AuthenticationException) {
                 $response = [
                     'message'   => $e->getMessage(),
