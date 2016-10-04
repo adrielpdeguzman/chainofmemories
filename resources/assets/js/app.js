@@ -1,19 +1,10 @@
 /**
- * Bootstrap application dependencies.
+ * Configure and instantiate root VueRouter instance
  */
-window._ = require('lodash');
+import Vue from 'vue';
+import VueResource from 'vue-resource';
+import VueRouter from 'vue-router';
 
-/**
- * Vue configurations.
- * @type {[type]}
- */
-window.Vue = require('vue');
-require('vue-resource');
+Vue.use(VueResource);
+Vue.use(VueRouter);
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').content;
-
-/**
- * Instantiate the root Vue instance.
- */
-const app = new Vue({
-  el: '#app',
-});
