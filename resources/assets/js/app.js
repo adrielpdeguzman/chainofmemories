@@ -6,6 +6,7 @@ import VueResource from 'vue-resource';
 import VueRouter from 'vue-router';
 
 import Home from './components/Home.vue';
+import Journals from './components/Journals.vue';
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -14,7 +15,8 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/', component: Home, }
+        { path: '/', component: Home, },
+        { path: '/journals', component: Journals, },
     ],
 });
 
