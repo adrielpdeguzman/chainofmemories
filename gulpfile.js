@@ -1,6 +1,7 @@
 const elixir = require('laravel-elixir');
 
-require('laravel-elixir-vue');
+require('laravel-elixir-vue-2');
+require('laravel-elixir-stylus');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,17 +15,12 @@ require('laravel-elixir-vue');
  */
 
 elixir(mix => {
-  mix.sass('app.scss')
-    .webpack('app.js')
-    .copy([
-      'node_modules/bootstrap-sass/assets/fonts',
-    ], 'public/fonts')
-    .version([
-      'js/app.js',
-      'css/app.css',
-    ])
-    .browserSync({
-      notify: false,
-      proxy: 'chainofmemories.app',
-    });
+     mix.stylus('app.styl')
+        .webpack('app.js')
+        .copy('./node_modules/normalize.css/normalize.css', './public/css/vendor')
+        .browserSync({
+            notify: false,
+            open: false,
+            proxy: 'chainofmemories.app',
+        });
 });
