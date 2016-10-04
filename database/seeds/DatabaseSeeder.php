@@ -9,9 +9,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $users = factory(App\User::class, 2)->create()
-            ->each(function ($u) {
-                $u->journals()->save(factory(App\Journal::class)->make());
-            });
+        factory(App\User::class, 2)->create();
+        factory(App\Journal::class, 55)->create();
     }
 }

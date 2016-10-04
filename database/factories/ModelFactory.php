@@ -28,5 +28,8 @@ $factory->define(App\Journal::class, function (Faker\Generator $faker) {
         'publish_date' => $faker->dateTimeThisYear,
         'contents' => $faker->paragraphs(5, true),
         'events' => $faker->sentences(3, true),
+        'user_id' => function () {
+            return App\User::inRandomOrder()->first()->id;
+        },
     ];
 });
