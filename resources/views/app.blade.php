@@ -9,7 +9,12 @@
 </head>
 <body>
 
-    <app></app>
+    <div id="app">
+        <h1>Chain of Memories</h1>
+        <router-link to="/home">Home</router-link>
+
+        <router-view></router-view>
+    </div>
 
     <script src="/js/app.js"></script>
 </body>
