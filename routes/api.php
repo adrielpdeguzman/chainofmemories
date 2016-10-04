@@ -22,6 +22,8 @@ Route::group(['prefix' => 'journals', 'as' => 'journals.'], function () {
         ->name('random');
     Route::get('dates_without_entry', 'JournalController@getDatesWithoutEntry')
         ->name('dates_without_entry');
+    Route::get('volumes_with_start_dates', 'JournalController@getVolumesWithStartDates')
+        ->name('volumes_with_start_dates');
 });
 
 Route::singularResourceParameters();
