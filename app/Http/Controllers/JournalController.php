@@ -179,6 +179,6 @@ class JournalController extends Controller
             array_push($volumesWithStartDates, ['volume' => $item['volume'], 'publish_date' => $item['publish_date']]);
         }
 
-        return response()->json(array_reverse($volumesWithStartDates));
+        return response()->json($volumesWithStartDates);
     }
 }
