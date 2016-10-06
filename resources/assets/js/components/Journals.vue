@@ -1,5 +1,6 @@
 <template>
     <div class="Journal">
+        <button type="button" @click="showCreateModal = true">Create</button>
         <journal-sidebar
             :volumes="volumes"
             :journals="journals"
@@ -8,17 +9,23 @@
         <journal-list
             :journals="journals"
         ></journal-list>
+
+        <journal-create-modal
+            :show="showCreateModal"
+            @close="showCreateModal = false"
+        ></journal-create-modal>
     </div>
 </template>
 
 <script>
     import JournalList from './JournalList.vue';
     import JournalSidebar from './JournalSidebar.vue';
+    import JournalCreateModal from './JournalCreateModal.vue';
 
     export default {
 
         components: {
-            JournalList, JournalSidebar,
+            JournalList, JournalSidebar, JournalCreateModal,
         },
 
         /**
@@ -28,6 +35,8 @@
             return {
                 volumes: [],
                 journals: [],
+
+                showCreateModal: false,
             };
         },
 
