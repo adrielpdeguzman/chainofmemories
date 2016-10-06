@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+// Authentication routes...
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout');
 
-Route::any('{all}', function () {
+Route::get('/{vue_capture?}', function () {
     return view('app');
-})->where(('all'), '.*');
+})->where('vue_capture', '[\/\w\.-]*');
