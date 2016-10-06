@@ -21,6 +21,17 @@ class JournalController extends Controller
     {
         $query = new Journal();
 
+        if ($request->has('volume')) {
+            $volume = $request->input('volume');
+            $anniversaryDate = config('constants.anniversary_date')->format('Y-m-d');
+
+            if ($volume > 1) {
+                $query = $query->whereRaw('timestampdiff(month,\''.$anniversaryDate.'\',publish_date) + 2= '.$volume);
+            } else {
+                $query = $query->where('publish_date', '<', $anniversaryDate);
+            }
+        }
+
         if ($request->has('q')) {
             $q = $request->input('q');
             $query = $query->where('contents', 'like', "%$q%")
@@ -146,5 +157,28 @@ class JournalController extends Controller
         }
 
         return response()->json($datesWithoutEntry);
+    }
+
+    /**
+     * Get the list of volumes with start dates
+     * 
+     * @param  Illuminate\Http\Request $request
+     * 
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function getVolumesWithStartDates(Request $request)
+    {
+        $volumesWithStartDates = [];
+
+        $query = Journal::orderBy('publish_date')
+            ->get(['publish_date'])
+            ->unique('volume')
+            ->toArray();
+
+        foreach ($query as $item) {
+            array_push($volumesWithStartDates, ['volume' => $item['volume'], 'publish_date' => $item['publish_date']]);
+        }
+
+        return response()->json($volumesWithStartDates);
     }
 }
