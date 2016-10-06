@@ -5,10 +5,6 @@ export default {
     },
 
     check(context) {
-        context.$http.get('/api/user')
-                .then(({body}) => {
-                    this.user.data = body;
-                    this.user.isAuthenticated = true;
-                });
+        return context.$http.get('/api/user');
     },
 }

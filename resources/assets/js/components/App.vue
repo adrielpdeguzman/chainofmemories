@@ -25,6 +25,9 @@
     import auth from '../services/auth';
 
     export default {
+        /**
+         * The component's data.
+         */
         data() {
             return {
                 csrfToken: document.querySelector('meta[name=csrf-token]').content,

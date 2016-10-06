@@ -18,11 +18,22 @@
 </template>
 
 <script>
+    import auth from '../services/auth';
     import JournalList from './journal/JournalList.vue';
     import JournalSidebar from './journal/JournalSidebar.vue';
     import JournalCreateModal from './journal/JournalCreateModal.vue';
 
     export default {
+        /**
+         * Check authentication before entering route.
+         */
+        beforeRouteEnter(to, from, next) {
+            if (!auth.user.isAuthenticated) {
+                next('/login');
+            } else {
+                next();
+            }
+        },
 
         components: {
             JournalList, JournalSidebar, JournalCreateModal,
@@ -33,6 +44,7 @@
          */
         data() {
             return {
+                user: auth.user,
                 volumes: [],
                 journals: [],
 
