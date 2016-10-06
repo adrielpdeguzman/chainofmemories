@@ -51,6 +51,12 @@
                 this.$emit('close');
             },
         },
+
+        watch: {
+            show() {
+                document.querySelector('body').classList.toggle('utility-no-scroll');
+            },
+        },
     }
 </script>
 
