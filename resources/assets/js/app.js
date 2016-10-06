@@ -13,8 +13,9 @@ import { formatDate } from './filters/moment.js';
 /**
  * Import the components.
  */
+import App from './components/App.vue';
 import Home from './components/Home.vue';
-import Journals from './components/Journals.vue';
+import Journal from './components/Journal.vue';
 
 /**
  * Import other vendor packages.
@@ -44,10 +45,13 @@ const router = new VueRouter({
     routes: [
         { path: '/', component: Home, },
         { path: '/journals', redirect: { name: 'volume' }, },
-        { path: '/journals/volume/:volume?', name: 'volume', component: Journals },
+        { path: '/journals/volume/:volume?', name: 'volume', component: Journal },
     ],
 });
 
+
+Vue.component('app', App);
 const app = new Vue({
     router,
+    template: `<app></app>`,
 }).$mount('#app');

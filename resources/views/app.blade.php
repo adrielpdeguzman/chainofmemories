@@ -8,15 +8,7 @@
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
-
-    <div id="app">
-        <h1>Chain of Memories</h1>
-        <router-link to="/">Home</router-link>
-        <router-link to="/journals">Journals</router-link>
-
-        <router-view></router-view>
-    </div>
-
+    <div id="app"></div>
     <script src="/js/app.js"></script>
 </body>
 </html>

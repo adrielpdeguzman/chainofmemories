@@ -18,9 +18,9 @@
 </template>
 
 <script>
-    import JournalList from './JournalList.vue';
-    import JournalSidebar from './JournalSidebar.vue';
-    import JournalCreateModal from './JournalCreateModal.vue';
+    import JournalList from './journal/JournalList.vue';
+    import JournalSidebar from './journal/JournalSidebar.vue';
+    import JournalCreateModal from './journal/JournalCreateModal.vue';
 
     export default {
 
