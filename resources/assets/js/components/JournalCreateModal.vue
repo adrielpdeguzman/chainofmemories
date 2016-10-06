@@ -26,7 +26,6 @@
 </template>
 
 <script>
-    import _ from 'lodash';
     import Modal from './Modal.vue';
 
     export default {
