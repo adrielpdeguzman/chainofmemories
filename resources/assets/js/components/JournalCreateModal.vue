@@ -37,7 +37,7 @@
         },
 
         /**
-         * Initialize the component's data.
+         * The component's data.
          */
         data() {
             return {
@@ -59,7 +59,7 @@
              */
             getDatesWithoutEntries() {
                 this.$http.get('/api/journals/dates_without_entry')
-                        .then((response) => this.dates = response.body);
+                        .then(({body}) => this.dates = body);
             },
 
             /**
@@ -69,14 +69,29 @@
                 this.isLoading = true;
                 this.$http.post('/api/journals', this.journal)
                         .then(() => {
+                            this.reset();
                             this.$emit('close');
+                            eventBus.$emit('refresh');
                         })
-                        .catch(response => {
-                            this.journal.errors = response.body.error.message;
+                        .catch(({body}) => {
+                            this.journal.errors = body.error.message;
                         })
                         .finally(() => {
                             this.isLoading = false;
                         });
+            },
+
+            /**
+             * Reset the form.
+             */
+            reset() {
+                this.dates = [];
+                this.isLoading = false;
+
+                this.journal.errors = [];
+                this.journal.publish_date = '';
+                this.journal.contents = '';
+                this.journal.events = '';
             },
         },
 
@@ -85,13 +100,7 @@
                 if (this.show) {
                     this.getDatesWithoutEntries();
                 } else {
-                    this.dates = [];
-                    this.isLoading = false;
-
-                    this.journal.errors = [];
-                    this.journal.publish_date = '';
-                    this.journal.contents = '';
-                    this.journal.events = '';
+                    this.reset();
                 }
             },
         },

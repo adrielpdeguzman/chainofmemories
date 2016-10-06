@@ -44,6 +44,10 @@
          * Register events handlers.
          */
         created() {
+            eventBus.$on('refresh', function () {
+                this.getVolumes();
+                this.getJournals();
+            }.bind(this));
             eventBus.$on('volume-changed', this.volumeChanged);
         },
 
