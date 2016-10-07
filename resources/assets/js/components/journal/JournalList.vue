@@ -1,11 +1,10 @@
 <template>
     <div class="Journal__list" v-if="journals.length">
-        <div class="Journal__entry" v-for="journal of journals" :id="journal.id">
-            <div class="Journal__heading">
-                <div class="Journal__date">
+        <div class="panel" v-for="journal of journals" :id="journal.id">
+            <div class="panel__heading">
+                <div class="Journal__info">
                     Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }}
-                </div>
-                <div class="Journal__author">
+                    <hr>
                     Posted by: {{ journal.user.name }}
                 </div>
                 <div class="Journal__edit" v-if="isOwner(journal)">
@@ -14,26 +13,33 @@
                     </button>
                 </div>
             </div>
-            <div class="Journal__body">
+
+            <div class="panel__body">
                 <div class="Journal__contents">
                     <p v-for="paragraph of journal.contents.match(/[^\r\n]+/g)" v-text="paragraph"></p>
                 </div>
             </div>
-            <div class="Journal__footer" v-if="journal.events.length > 0">
+
+            <div class="panel__footer" v-if="journal.events.length > 0">
                 <ul class="Journal__events">
                     <li v-for="event of journal.events.match(/[^\r\n]+/g)" v-text="event"></li>
                 </ul>
             </div>
         </div>
         
-        <div class="Journal__events-outline" v-if="journals.length" id="events">
-            <h3>Outline of Special Events</h3>
-            <div v-for="journal of journals">
-                <div v-if="journal.events.length > 0">
-                    <h4>Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }} by: {{ journal.user.name }}</h4>
-                    <ul>
-                        <li v-for="event of journal.events.match(/[^\r\n]+/g)" v-text="event"></li>
-                    </ul>
+        <div class="panel" v-if="journals.length" id="events">
+            <div class="panel__heading">
+                Outline of Special Events
+            </div>
+
+            <div class="panel__body">
+                <div v-for="journal of journals">
+                    <div v-if="journal.events.length > 0">
+                        <h4>Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }} by: {{ journal.user.name }}</h4>
+                        <ul>
+                            <li v-for="event of journal.events.match(/[^\r\n]+/g)" v-text="event"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

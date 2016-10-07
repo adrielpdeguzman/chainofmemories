@@ -8,8 +8,8 @@
                 <input type="hidden" name="_token" :value="csrfToken">
 
                 <template v-if="!user.isAuthenticated">
-                    <input type="text" class="input--text" name="username" id="username" placeholder="Username">
-                    <input type="password" class="input--text" name="password" id="password" placeholder="Password">
+                    <input type="text" class="input-field" name="username" id="username" placeholder="Username">
+                    <input type="password" class="input-field" name="password" id="password" placeholder="Password">
                 </template>
 
                 <button class="button--link" type="submit">

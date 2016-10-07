@@ -1,12 +1,14 @@
 <template>
-    <aside class="Journal__sidebar">
-        <select class="input-field" v-if="volumes.length" :value="$route.params.volume" @change="volumeChanged">
-            <option v-for="volume of volumes" :value="volume.volume">
-                Vol. {{ volume.volume }} | {{ volume.publish_date | formatDate('MMMM\'YY') }}
-            </option>
-        </select>
-        <div class="Journal__links">
-            <ul>
+    <aside class="Journal__sidebar panel">
+        <div class="panel__heading">
+            <select class="input-field utility-max-width" v-if="volumes.length" :value="$route.params.volume" @change="volumeChanged">
+                <option v-for="volume of volumes" :value="volume.volume">
+                    Vol. {{ volume.volume }} | {{ volume.publish_date | formatDate('MMMM\'YY') }}
+                </option>
+            </select>
+        </div>
+        <div class="panel__body">
+            <ul class="Journal__links">
                 <li v-for="journal of filteredJournals">
                     <a :href="'#' + journal.id">
                         Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }}
