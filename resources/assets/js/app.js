@@ -56,20 +56,18 @@ const router = new VueRouter({
     ],
 });
 
-Vue.component('app', App);
-const app = new Vue({
-    router,
-    template: `<app></app>`,
-});
-
 /**
  * Check if the user is authenticated, and then mount the app.
  */
-auth.check(app)
+auth.check(Vue)
     .then(({body}) => {
         auth.user.data = body;
         auth.user.isAuthenticated = true;
     })
     .finally(() => {
-        app.$mount('#app');
+        Vue.component('app', App);
+        const app = new Vue({
+            router,
+            template: `<app></app>`,
+        }).$mount('#app');
     });

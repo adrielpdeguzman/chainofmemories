@@ -5,6 +5,10 @@ export default {
     },
 
     check(context) {
-        return context.$http.get('/api/user');
+        if (context.$http) {
+            return context.$http.get('/api/user');    
+        } else {
+            return context.http.get('/api/user');
+        }
     },
 }
