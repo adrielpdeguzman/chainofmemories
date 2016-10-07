@@ -6,23 +6,19 @@
         @close="$emit('close')"
     >
         <div slot="heading">
-            Update Journal
+            Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }}
         </div>
-
         <div slot="body">
-            <template v-if="dates.length > 0">
-                <form @submit.prevent="callback">
-                    <textarea class="textarea" v-model="journal.contents"></textarea>
-                    <textarea class="textarea" v-model="journal.events"></textarea>
-                </form>
-            </template>
+            <form @submit.prevent="callback">
+                <textarea class="textarea" v-model="journal.contents"></textarea>
+                <textarea class="textarea" v-model="journal.events"></textarea>
+            </form>
         </div>
     </modal>
 </template>
 
 <script>
-    import _ from 'lodash';
-    import Modal from './Modal.vue';
+    import Modal from '../Modal.vue';
 
     export default {
         props: ['show'],
@@ -44,6 +40,13 @@
                     events: '',
                 },
             };
+        },
+
+        /** 
+         * Register event handlers.
+         */
+        created() {
+            eventBus.$on('journal-edit', this.setJournal);
         },
 
         methods: {
@@ -70,21 +73,24 @@
              * Reset the form.
              */
             reset() {
-                this.dates = [];
                 this.isLoading = false;
 
                 this.journal.errors = [];
-                this.journal.publish_date = '';
                 this.journal.contents = '';
                 this.journal.events = '';
+            },
+
+            /**
+             * Set the journal to be updated.
+             */
+            setJournal(journal) {
+                _.assign(this.journal, journal);
             },
         },
 
         watch: {
             show() {
-                if (this.show) {
-                    this.getDatesWithoutEntries();
-                } else {
+                if (!this.show) {
                     this.reset();
                 }
             },

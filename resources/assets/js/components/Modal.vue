@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="Modal" v-if="show" @click.self="close">
+        <div class="Modal" v-if="show" @click.self="close" @keyup.esc="close">
             <div class="Modal__container">
                 <div class="Modal__heading">
                     <slot name="heading">Modal Title</slot>

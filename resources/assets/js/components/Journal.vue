@@ -7,8 +7,14 @@
         ></journal-sidebar>
 
         <journal-list
+            :user="user"
             :journals="journals"
         ></journal-list>
+
+        <journal-edit-modal
+            :show="showEditModal"
+            @close="showEditModal = false"
+        ></journal-edit-modal>
 
         <journal-create-modal
             :show="showCreateModal"
@@ -21,6 +27,7 @@
     import auth from '../services/auth';
     import JournalList from './journal/JournalList.vue';
     import JournalSidebar from './journal/JournalSidebar.vue';
+    import JournalEditModal from './journal/JournalEditModal.vue';
     import JournalCreateModal from './journal/JournalCreateModal.vue';
 
     export default {
@@ -36,7 +43,7 @@
         },
 
         components: {
-            JournalList, JournalSidebar, JournalCreateModal,
+            JournalList, JournalSidebar, JournalEditModal, JournalCreateModal,
         },
 
         /**
@@ -46,9 +53,11 @@
             return {
                 user: auth.user,
                 volumes: [],
+                journal: [],
                 journals: [],
 
                 showCreateModal: false,
+                showEditModal: false,
             };
         },
 
@@ -60,7 +69,8 @@
                 this.getVolumes();
                 this.getJournals();
             }.bind(this));
-            eventBus.$on('volume-changed', this.volumeChanged);
+            eventBus.$on('journal-edit', this.edit);
+            eventBus.$on('journal-volume-changed', this.volumeChanged);
         },
 
         /**
@@ -115,6 +125,14 @@
              */
             hasVolumeParam() {
                 return Boolean(this.$route.params.volume);
+            },
+
+            /**
+             * Handle edit journal event.
+             */
+            edit(journal) {
+                this.journal = journal;
+                this.showEditModal = true;
             },
         },
 

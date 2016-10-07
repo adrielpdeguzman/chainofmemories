@@ -1,8 +1,8 @@
 @import "vendor/normalize.css";
 @import "vendor/font-awesome.css";
 .utility-no-scroll {
-  overflow-y: scroll;
-  position: fixed;
+  overflow: hidden;
+  padding-right: 15px;
 }
 
 /*# sourceMappingURL=app.css.map */

@@ -7,7 +7,7 @@
         </select>
         <div class="Journal__links">
             <ul>
-                <li v-for="journal of journals">
+                <li v-for="journal of filteredJournals">
                     <a :href="'#' + journal.id">
                         Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }}
                     </a>
@@ -27,7 +27,13 @@
              * Emit an event when volume changed.
              */
             volumeChanged(event) {
-                eventBus.$emit('volume-changed', event.target.value);
+                eventBus.$emit('journal-volume-changed', event.target.value);
+            },
+        },
+
+        computed: {
+            filteredJournals() {
+                return _.uniqBy(this.journals, 'day');
             },
         },
     }
