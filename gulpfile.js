@@ -17,7 +17,13 @@ require('laravel-elixir-stylus');
 elixir(mix => {
      mix.stylus('app.styl')
         .webpack('app.js')
-        .copy('./node_modules/normalize.css/normalize.css', './public/css/vendor')
+        .copy([
+            './node_modules/font-awesome/css/font-awesome.css',
+            './node_modules/normalize.css/normalize.css',
+        ], './public/css/vendor')
+        .copy([
+            './node_modules/font-awesome/fonts',
+        ], './public/css/fonts')
         .browserSync({
             notify: false,
             open: false,
