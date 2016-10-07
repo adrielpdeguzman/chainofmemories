@@ -1,5 +1,5 @@
 <template>
-    <div class="Journal__sidebar">
+    <aside class="Journal__sidebar">
         <select class="select" v-if="volumes.length" :value="$route.params.volume" @change="volumeChanged">
             <option v-for="volume of volumes" :value="volume.volume">
                 Vol. {{ volume.volume }} | {{ volume.publish_date | formatDate('MMMM\'YY') }}
@@ -15,7 +15,7 @@
                 <li v-if="journals.length"><a href="#events">Outline of Special Events</a></li>
             </ul>
         </div>
-    </div>
+    </aside>
 </template>
 
 <script>

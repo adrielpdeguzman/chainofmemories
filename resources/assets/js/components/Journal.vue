@@ -65,10 +65,7 @@
          * Register events handlers.
          */
         created() {
-            eventBus.$on('refresh', function () {
-                this.getVolumes();
-                this.getJournals();
-            }.bind(this));
+            eventBus.$on('journal-refresh', this.refresh);
             eventBus.$on('journal-edit', this.edit);
             eventBus.$on('journal-volume-changed', this.volumeChanged);
         },
@@ -113,14 +110,6 @@
             },
 
             /**
-             * Handle volume changed event.
-             */
-            volumeChanged(volume) {
-                this.$router.push({ name: 'volume', params: { volume, }});
-                this.getJournals();
-            },
-
-            /**
              * Check if the current route has volume param.
              */
             hasVolumeParam() {
@@ -128,11 +117,27 @@
             },
 
             /**
-             * Handle edit journal event.
+             * Handle journal volume changed event.
+             */
+            volumeChanged(volume) {
+                this.$router.push({ name: 'volume', params: { volume, }});
+                this.getJournals();
+            },
+
+            /**
+             * Handle journal edit event.
              */
             edit(journal) {
                 this.journal = journal;
                 this.showEditModal = true;
+            },
+
+            /**
+             * Handle journal refresh event.
+             */
+            refresh() {
+                this.getVolumes();
+                this.getJournals();
             },
         },
 
