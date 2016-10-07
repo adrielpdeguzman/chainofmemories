@@ -1,21 +1,30 @@
 <template>
     <div class="App">
         <nav class="Navbar">
-            <router-link to="/">Home</router-link>
-            <router-link to="/journals" v-if="user.isAuthenticated">Journals</router-link>
+            <div class="Navbar__brand">
+                <router-link to="/">Chain of Memories</router-link>
+            </div>
 
-            <form method="post" :action="user.isAuthenticated ? '/logout' : '/login'">
-                <input type="hidden" name="_token" :value="csrfToken">
+            <ul class="Navbar__links">
+                <li><router-link to="/journals" v-if="user.isAuthenticated">Journals</router-link></li>
+            </ul>
 
-                <template v-if="!user.isAuthenticated">
-                    <input type="text" class="input-field" name="username" id="username" placeholder="Username">
-                    <input type="password" class="input-field" name="password" id="password" placeholder="Password">
-                </template>
+            <ul class="Navbar__links Navbar__links--right">
+                <li>
+                    <form method="post" :action="user.isAuthenticated ? '/logout' : '/login'">
+                        <input type="hidden" name="_token" :value="csrfToken">
 
-                <button class="button--link" type="submit">
-                    {{ user.isAuthenticated ? 'Logout' : 'Login' }}
-                </button>
-            </form>
+                        <template v-if="!user.isAuthenticated">
+                            <input type="text" class="input-field" name="username" id="username" placeholder="Username">
+                            <input type="password" class="input-field" name="password" id="password" placeholder="Password">
+                        </template>
+
+                        <button class="button--link" type="submit">
+                            {{ user.isAuthenticated ? 'Logout' : 'Login' }}
+                        </button>
+                    </form>
+                </li>
+            </ul>
         </nav>
 
         <div class="container">

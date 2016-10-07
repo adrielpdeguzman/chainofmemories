@@ -85,11 +85,42 @@
   background: #f9f9f9;
   border-top: 1px solid #ddd;
 }
+.Navbar {
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #000;
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  height: 50px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.Navbar__brand {
+  flex-basis: 150px;
+}
+.Navbar__links {
+  display: inline-block;
+  list-style: none;
+}
+.Navbar__links > li {
+  flex-basis: 1;
+  text-align: center;
+}
+.Navbar__links--right {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+}
 body {
   background: #eee;
   color: #333b3f;
   font-size: 14px;
   line-height: 1.6;
+  padding-top: 50px;
 }
 a {
   color: #203470;
