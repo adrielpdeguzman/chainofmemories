@@ -1,5 +1,4 @@
-@import "vendor/normalize.css";
-@import "vendor/font-awesome.css";
+@import "vendors.css";
 .utility-no-scroll {
   overflow: hidden;
   padding-right: 15px;
