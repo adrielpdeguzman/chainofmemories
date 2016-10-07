@@ -10,17 +10,26 @@
         </div>
 
         <div slot="body">
-            <template v-if="dates.length > 0">
-                <form @submit.prevent="callback">
-                    <select class="select" v-model="journal.publish_date">
+            <form v-if="dates.length > 0" @submit.prevent="create" @keyup.enter="hotkeySubmit">
+                <div class="input-group">
+                    <label class="label" for="journal.publish_date">Publish Date</label>
+                    <select class="select" v-model="journal.publish_date" name="journal.publish_date" id="journal.publish_date">
                         <option v-for="date of dates" :value="date">
                             {{ date }}
                         </option>
                     </select>
-                    <textarea class="textarea" v-model="journal.contents"></textarea>
-                    <textarea class="textarea" v-model="journal.events"></textarea>
-                </form>
-            </template>
+                </div>
+
+                <div class="input-group">
+                    <label class="label" for="journal.contents">Journal Contents</label>
+                    <textarea class="textarea" v-model="journal.contents" name="journal.contents" id="journal.contents"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label class="label" for="journal.events">Special Events</label>
+                    <textarea class="textarea" v-model="journal.events" name="journal.events" id="journal.events"></textarea>
+                </div>
+            </form>
         </div>
     </modal>
 </template>
@@ -70,7 +79,7 @@
                         .then(() => {
                             this.reset();
                             this.$emit('close');
-                            eventBus.$emit('refresh');
+                            eventBus.$emit('journal-refresh');
                         })
                         .catch(({body}) => {
                             this.journal.errors = body.error.message;
@@ -91,6 +100,15 @@
                 this.journal.publish_date = '';
                 this.journal.contents = '';
                 this.journal.events = '';
+            },
+
+            /**
+             * Submit the form when pressing ctrl/alt + enter.
+             */
+            hotkeySubmit(event) {
+                if (event.ctrlKey || event.altKey) {
+                    this.create();
+                };
             },
         },
 

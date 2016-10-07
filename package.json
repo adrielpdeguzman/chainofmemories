@@ -5,6 +5,7 @@
     "dev": "gulp watch"
   },
   "devDependencies": {
+    "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "laravel-elixir": "^6.0.0-9",
     "laravel-elixir-browsersync-official": "^1.0.0",
@@ -13,11 +14,10 @@
     "laravel-elixir-webpack-official": "^1.0.6",
     "lodash": "^4.14.0",
     "moment": "^2.15.1",
-    "normalize.css": "^4.2.0",
+    "normalize.css": "^5.0.0",
     "stylus-loader": "^2.3.1",
     "vue": "^2.0.1",
     "vue-resource": "^1.0.0",
-    "vue-router": "^2.0.0",
-    "webpack-stream": "github:jeroennoten/webpack-stream#patch-1"
+    "vue-router": "^2.0.0"
   }
 }

@@ -6,23 +6,26 @@
         @close="$emit('close')"
     >
         <div slot="heading">
-            Update Journal
+            Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }}
         </div>
-
         <div slot="body">
-            <template v-if="dates.length > 0">
-                <form @submit.prevent="callback">
-                    <textarea class="textarea" v-model="journal.contents"></textarea>
-                    <textarea class="textarea" v-model="journal.events"></textarea>
-                </form>
-            </template>
+            <form @submit.prevent="edit" @keyup.enter="hotkeySubmit">
+                <div class="input-group">
+                    <label class="label" for="journal.contents">Journal Contents</label>
+                    <textarea class="textarea" v-model="journal.contents" name="journal.contents" id="journal.contents"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label class="label" for="special.events">Special Events</label>
+                    <textarea class="textarea" v-model="journal.events" name="special.events" id="special.events"></textarea>
+                </div>
+            </form>
         </div>
     </modal>
 </template>
 
 <script>
-    import _ from 'lodash';
-    import Modal from './Modal.vue';
+    import Modal from '../Modal.vue';
 
     export default {
         props: ['show'],
@@ -46,6 +49,13 @@
             };
         },
 
+        /** 
+         * Register event handlers.
+         */
+        created() {
+            eventBus.$on('journal-edit', this.setJournal);
+        },
+
         methods: {
             /**
              * Create the journal entry.
@@ -56,7 +66,7 @@
                         .then(() => {
                             this.reset();
                             this.$emit('close');
-                            eventBus.$emit('refresh');
+                            eventBus.$emit('journal-refresh');
                         })
                         .catch(({body}) => {
                             this.journal.errors = body.error.message;
@@ -70,21 +80,33 @@
              * Reset the form.
              */
             reset() {
-                this.dates = [];
                 this.isLoading = false;
 
                 this.journal.errors = [];
-                this.journal.publish_date = '';
                 this.journal.contents = '';
                 this.journal.events = '';
+            },
+
+            /**
+             * Submit the form when pressing ctrl/alt + enter.
+             */
+            hotkeySubmit(event) {
+                if (event.ctrlKey || event.altKey) {
+                    this.edit();
+                };
+            },
+
+            /**
+             * Set the journal to be updated.
+             */
+            setJournal(journal) {
+                _.assign(this.journal, journal);
             },
         },
 
         watch: {
             show() {
-                if (this.show) {
-                    this.getDatesWithoutEntries();
-                } else {
+                if (!this.show) {
                     this.reset();
                 }
             },

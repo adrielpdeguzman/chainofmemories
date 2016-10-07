@@ -7,8 +7,14 @@
         ></journal-sidebar>
 
         <journal-list
+            :user="user"
             :journals="journals"
         ></journal-list>
+
+        <journal-edit-modal
+            :show="showEditModal"
+            @close="showEditModal = false"
+        ></journal-edit-modal>
 
         <journal-create-modal
             :show="showCreateModal"
@@ -21,6 +27,7 @@
     import auth from '../services/auth';
     import JournalList from './journal/JournalList.vue';
     import JournalSidebar from './journal/JournalSidebar.vue';
+    import JournalEditModal from './journal/JournalEditModal.vue';
     import JournalCreateModal from './journal/JournalCreateModal.vue';
 
     export default {
@@ -36,7 +43,7 @@
         },
 
         components: {
-            JournalList, JournalSidebar, JournalCreateModal,
+            JournalList, JournalSidebar, JournalEditModal, JournalCreateModal,
         },
 
         /**
@@ -46,9 +53,11 @@
             return {
                 user: auth.user,
                 volumes: [],
+                journal: [],
                 journals: [],
 
                 showCreateModal: false,
+                showEditModal: false,
             };
         },
 
@@ -56,11 +65,9 @@
          * Register events handlers.
          */
         created() {
-            eventBus.$on('refresh', function () {
-                this.getVolumes();
-                this.getJournals();
-            }.bind(this));
-            eventBus.$on('volume-changed', this.volumeChanged);
+            eventBus.$on('journal-refresh', this.refresh);
+            eventBus.$on('journal-edit', this.edit);
+            eventBus.$on('journal-volume-changed', this.volumeChanged);
         },
 
         /**
@@ -103,7 +110,14 @@
             },
 
             /**
-             * Handle volume changed event.
+             * Check if the current route has volume param.
+             */
+            hasVolumeParam() {
+                return Boolean(this.$route.params.volume);
+            },
+
+            /**
+             * Handle journal volume changed event.
              */
             volumeChanged(volume) {
                 this.$router.push({ name: 'volume', params: { volume, }});
@@ -111,10 +125,19 @@
             },
 
             /**
-             * Check if the current route has volume param.
+             * Handle journal edit event.
              */
-            hasVolumeParam() {
-                return Boolean(this.$route.params.volume);
+            edit(journal) {
+                this.journal = journal;
+                this.showEditModal = true;
+            },
+
+            /**
+             * Handle journal refresh event.
+             */
+            refresh() {
+                this.getVolumes();
+                this.getJournals();
             },
         },
 

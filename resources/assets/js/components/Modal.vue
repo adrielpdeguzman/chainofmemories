@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="Modal" v-if="show" @click.self="close">
+        <div class="Modal" v-if="show" @click.self="close" @keyup.esc="close">
             <div class="Modal__container">
                 <div class="Modal__heading">
                     <slot name="heading">Modal Title</slot>
@@ -12,8 +12,8 @@
 
                 <div class="Modal__footer">
                     <slot name="footer">
-                        <button type="button" @click="callback">{{ okText }}</button>
-                        <button type="button" @click="close">{{ cancelText }}</button>
+                        <button type="button" class="button button-default" @click="callback">{{ okText }}</button>
+                        <button type="button" class="button" @click="close">{{ cancelText }}</button>
                     </slot>
                 </div>
             </div>
