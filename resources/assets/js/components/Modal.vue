@@ -12,7 +12,7 @@
 
                 <div class="Modal__footer">
                     <slot name="footer">
-                        <button type="button" class="button button-default" @click="callback">{{ okText }}</button>
+                        <button type="button" class="button button--primary" @click="callback">{{ okText }}</button>
                         <button type="button" class="button" @click="close">{{ cancelText }}</button>
                     </slot>
                 </div>

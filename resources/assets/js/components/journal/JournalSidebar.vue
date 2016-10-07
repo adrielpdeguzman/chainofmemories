@@ -1,6 +1,6 @@
 <template>
     <aside class="Journal__sidebar">
-        <select class="select" v-if="volumes.length" :value="$route.params.volume" @change="volumeChanged">
+        <select class="input-field" v-if="volumes.length" :value="$route.params.volume" @change="volumeChanged">
             <option v-for="volume of volumes" :value="volume.volume">
                 Vol. {{ volume.volume }} | {{ volume.publish_date | formatDate('MMMM\'YY') }}
             </option>

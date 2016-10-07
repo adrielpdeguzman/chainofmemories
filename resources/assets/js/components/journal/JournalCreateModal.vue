@@ -11,23 +11,26 @@
 
         <div slot="body">
             <form v-if="dates.length > 0" @submit.prevent="create" @keyup.enter="hotkeySubmit">
-                <div class="input-group">
-                    <label class="label" for="journal.publish_date">Publish Date</label>
-                    <select class="select" v-model="journal.publish_date" name="journal.publish_date" id="journal.publish_date">
+                <div :class="['input-group', journal.errors.publish_date ? 'input-group--has-error' : '']">
+                    <label class="input-label" for="journal.publish_date">Publish Date</label>
+                    <select class="input-field" v-model="journal.publish_date" name="journal.publish_date" id="journal.publish_date">
                         <option v-for="date of dates" :value="date">
                             {{ date }}
                         </option>
                     </select>
+                    <span class="input-error" v-for="error in journal.errors.publish_date" v-text="error"></span>
                 </div>
 
-                <div class="input-group">
-                    <label class="label" for="journal.contents">Journal Contents</label>
-                    <textarea class="textarea" v-model="journal.contents" name="journal.contents" id="journal.contents"></textarea>
+                <div :class="['input-group', journal.errors.contents ? 'input-group--has-error' : '']">
+                    <label class="input-label" for="journal.contents">Journal Contents</label>
+                    <textarea class="input-field" rows="10" v-model="journal.contents" name="journal.contents" id="journal.contents"></textarea>
+                    <span class="input-error" v-for="error in journal.errors.contents" v-text="error"></span>
                 </div>
 
-                <div class="input-group">
-                    <label class="label" for="journal.events">Special Events</label>
-                    <textarea class="textarea" v-model="journal.events" name="journal.events" id="journal.events"></textarea>
+                <div :class="['input-group', journal.errors.events ? 'input-group--has-error' : '']">
+                    <label class="input-label" for="journal.events">Special Events</label>
+                    <textarea class="input-field" rows="5" v-model="journal.events" name="journal.events" id="journal.events"></textarea>
+                    <span class="input-error" v-for="error in journal.errors.events" v-text="error"></span>
                 </div>
             </form>
         </div>
@@ -53,7 +56,7 @@
                 isLoading: false,
 
                 journal: {
-                    errors: [],
+                    errors: {},
                     publish_date: '',
                     contents: '',
                     events: '',
@@ -96,7 +99,7 @@
                 this.dates = [];
                 this.isLoading = false;
 
-                this.journal.errors = [];
+                this.journal.errors = {};
                 this.journal.publish_date = '';
                 this.journal.contents = '';
                 this.journal.events = '';

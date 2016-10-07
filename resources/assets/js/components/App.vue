@@ -1,13 +1,20 @@
 <template>
     <div class="App">
-        <nav>
+        <nav class="Navbar">
             <router-link to="/">Home</router-link>
-            <router-link to="/login" v-if="!user.isAuthenticated">Login</router-link>
             <router-link to="/journals" v-if="user.isAuthenticated">Journals</router-link>
 
-            <form method="post" action="/logout" v-if="user.isAuthenticated">
+            <form method="post" :action="user.isAuthenticated ? '/logout' : '/login'">
                 <input type="hidden" name="_token" :value="csrfToken">
-                <button class="button--link" type="submit">Logout</button>
+
+                <template v-if="!user.isAuthenticated">
+                    <input type="text" class="input--text" name="username" id="username" placeholder="Username">
+                    <input type="password" class="input--text" name="password" id="password" placeholder="Password">
+                </template>
+
+                <button class="button--link" type="submit">
+                    {{ user.isAuthenticated ? 'Logout' : 'Login' }}
+                </button>
             </form>
         </nav>
 
