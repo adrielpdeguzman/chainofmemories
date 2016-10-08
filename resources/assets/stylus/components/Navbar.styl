@@ -1,27 +1,46 @@
 $navbar-height = 50px
 
 .Navbar
-    align-items: center
-    background-color: #000
+    background-color: $brand-color
     display: flex
-    flex-wrap: wrap
-    height: $navbar-height
-    left: 0
-    position: fixed
+    margin: 0 -9999rem;
+    padding: 0 9999rem;
+    position: fixed;
     top: 0
-    width: 100%
+    width: 833px
 
-    &__brand
-        flex-basis: 150px
-
-    &__links
-        display: inline-block
+    > ul
         list-style: none
+        padding-left: 0
         
         > li
-            flex-basis: 1
-            text-align: center
+            display: inline
+        
+    &__brand
+        flex: 1
+        
+    &__left-links
+        flex: 3
+        
+        > li
+            padding-right: 20px
 
-        &--right
-            display: flex
-            justify-content: flex-end
+    &__right-links
+        display: flex
+        flex: 1
+        justify-content: flex-end
+        
+    &__link
+        color: #fff
+        
+        &:hover
+            color: #eee
+            text-decoration: none
+
+@media screen and (max-width: 480px)
+    .Navbar
+        flex-direction: column
+
+        &__left-links
+        &__right-links
+            flex-direction: column

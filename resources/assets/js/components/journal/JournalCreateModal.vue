@@ -1,5 +1,6 @@
 <template>
     <modal
+        large
         :show="show"
         :callback="create"
         :ok-text="'Create'"

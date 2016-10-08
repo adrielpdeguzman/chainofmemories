@@ -1,33 +1,31 @@
 <template>
     <div class="App">
         <nav class="Navbar">
-            <div class="Navbar__brand">
-                <router-link to="/">Chain of Memories</router-link>
-            </div>
-
-            <ul class="Navbar__links">
-                <li><router-link to="/journals" v-if="user.isAuthenticated">Journals</router-link></li>
+            <ul class="Navbar__brand">
+                <router-link to="/" tag="li"><a class= "Navbar__link">Chain of Memories</a></router-link>
             </ul>
 
-            <ul class="Navbar__links Navbar__links--right">
-                <li>
-                    <form method="post" :action="user.isAuthenticated ? '/logout' : '/login'">
+            <ul class="Navbar__left-links" v-if="user.isAuthenticated">
+                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
+                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
+                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
+                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
+                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
+            </ul>
+
+            <ul class="Navbar__right-links">
+                <li v-if="user.isAuthenticated">
+                    <form method="post" action="/logout">
                         <input type="hidden" name="_token" :value="csrfToken">
 
-                        <template v-if="!user.isAuthenticated">
-                            <input type="text" class="input-field" name="username" id="username" placeholder="Username">
-                            <input type="password" class="input-field" name="password" id="password" placeholder="Password">
-                        </template>
-
-                        <button class="button--link" type="submit">
-                            {{ user.isAuthenticated ? 'Logout' : 'Login' }}
-                        </button>
+                        <button class="button--link Navbar__link" type="submit">Logout</button>
                     </form>
                 </li>
+                <router-link to="/login" tag="li" v-else><a class="Navbar__link">Login</a></router-link>
             </ul>
         </nav>
 
-        <div class="container">
+        <div class="Body">
             <router-view></router-view>
         </div>
 

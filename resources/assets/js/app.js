@@ -20,6 +20,7 @@ import auth from './services/auth';
  */
 import App from './components/App.vue';
 import Home from './components/Home.vue';
+import Login from './components/Login.vue';
 import Journal from './components/Journal.vue';
 
 /**
@@ -49,6 +50,7 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/', component: Home, },
+        { path: '/login', component: Login, },
         { path: '/journals', redirect: { name: 'volume' }, },
         { path: '/journals/volume/:volume?', name: 'volume', component: Journal },
     ],

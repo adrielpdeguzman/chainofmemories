@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="Modal" v-if="show" @click.self="close" @keyup.esc="close">
+        <div :class="['Modal', {'Modal--large': large}]" v-if="show" @click.self="close" @keyup.esc="close">
             <div class="Modal__container">
                 <div class="Modal__heading">
                     <slot name="heading">Modal Title</slot>
@@ -44,6 +44,11 @@
                 type: String,
                 default: 'Cancel',
             },
+
+            large: {
+                type: Boolean,
+                default: false,
+            },
         },
 
         methods: {
@@ -62,12 +67,13 @@
 
 <style lang="stylus" scoped>
     .Modal
-        align-items: center
+        align-items: flex-start
         background: rgba(33, 33, 33, 0.5)
         display: flex
         height: 100%
         justify-content: center
         left: 0
+        overflow-y: scroll
         position: fixed
         top: 0
         width: 100%
@@ -75,12 +81,18 @@
         &__container
             background: #fff
             border: 1px solid #eee
-            display: flex
-            flex-direction: column
+            margin-top: 32px
             width: 480px
+            
+            .Modal--large &
+                width: 720px
         
             > div
-                padding: 20px
+                padding: 10px
+                
+        &__heading
+            font-size: 16px
+            font-weight: bold
         
         &__body
             border-bottom: 1px solid #eee
@@ -95,5 +107,6 @@
         
     .fade-enter
     .fade-leave-active
+        overflow-y: hidden
         opacity: 0
 </style>

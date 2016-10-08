@@ -3,7 +3,7 @@
   width: 100%;
 }
 .utility-no-scroll {
-  overflow: hidden;
+  overflow-y: hidden;
   padding-right: 15px;
 }
 .input-field {
@@ -61,12 +61,7 @@
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 2px;
-  display: -webkit-box;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  flex-direction: column;
-  margin: 10px;
+  margin: 10px 0;
 }
 .panel > div {
   padding: 10px;
@@ -86,34 +81,60 @@
   border-top: 1px solid #ddd;
 }
 .Navbar {
-  -webkit-box-align: center;
-  align-items: center;
-  background-color: #000;
+  background-color: #203470;
   display: -webkit-box;
   display: flex;
-  flex-wrap: wrap;
-  height: 50px;
-  left: 0;
+  margin: 0 -9999rem;
+  padding: 0 9999rem;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 833px;
+}
+.Navbar > ul {
+  list-style: none;
+  padding-left: 0;
+}
+.Navbar > ul > li {
+  display: inline;
 }
 .Navbar__brand {
-  flex-basis: 150px;
+  -webkit-box-flex: 1;
+  flex: 1;
 }
-.Navbar__links {
-  display: inline-block;
-  list-style: none;
+.Navbar__left-links {
+  -webkit-box-flex: 3;
+  flex: 3;
 }
-.Navbar__links > li {
-  flex-basis: 1;
-  text-align: center;
+.Navbar__left-links > li {
+  padding-right: 20px;
 }
-.Navbar__links--right {
+.Navbar__right-links {
   display: -webkit-box;
   display: flex;
+  -webkit-box-flex: 1;
+  flex: 1;
   -webkit-box-pack: end;
   justify-content: flex-end;
+}
+.Navbar__link {
+  color: #fff;
+}
+.Navbar__link:hover {
+  color: #eee;
+  text-decoration: none;
+}
+@media screen and (max-width: 480px) {
+  .Navbar {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+  }
+  .Navbar__left-links,
+  .Navbar__right-links {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+  }
 }
 body {
   background: #eee;
@@ -129,6 +150,12 @@ a {
 a:hover {
   color: #1d2f65;
   text-decoration: underline;
+}
+.App {
+  margin: auto;
+  padding: 0;
+  max-width: 833px;
+  min-width: 480px;
 }
 
 /*# sourceMappingURL=app.css.map */
