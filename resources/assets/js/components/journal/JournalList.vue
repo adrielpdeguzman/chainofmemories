@@ -1,6 +1,7 @@
 <template>
     <div class="Journal__list" v-if="journals.length">
-        <div class="panel" v-for="journal of journals" :id="journal.id">
+        <div class="panel" v-for="journal of journals">
+            <a class="utility-anchor" :id="journal.id"></a>
             <div class="panel__heading">
                 <div class="Journal__info">
                     Day {{ journal.day }} | {{ journal.publish_date | formatDate('YYYY-MM-DD') }}

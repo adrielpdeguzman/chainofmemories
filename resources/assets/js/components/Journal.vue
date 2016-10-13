@@ -1,6 +1,5 @@
 <template>
     <div class="Journal">
-        <button type="button" class="button button--primary" @click="showCreateModal = true">Create</button>
         <journal-sidebar
             :volumes="volumes"
             :journals="journals"

@@ -1,27 +1,23 @@
 <template>
     <div class="App">
-        <nav class="Navbar">
-            <ul class="Navbar__brand">
-                <router-link to="/" tag="li"><a class= "Navbar__link">Chain of Memories</a></router-link>
+        <nav class="navbar">
+            <ul class="navbar__brand">
+                <router-link to="/" tag="li"><a class= "navbar__link">Chain of Memories</a></router-link>
             </ul>
 
-            <ul class="Navbar__left-links" v-if="user.isAuthenticated">
-                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
-                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
-                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
-                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
-                <router-link to="/journals" tag="li"><a class="Navbar__link">Journals</a></router-link>
+            <ul class="navbar__left-links" v-if="user.isAuthenticated">
+                <router-link to="/journals" tag="li"><a class="navbar__link">Journals</a></router-link>
             </ul>
 
-            <ul class="Navbar__right-links">
+            <ul class="navbar__right-links">
                 <li v-if="user.isAuthenticated">
                     <form method="post" action="/logout">
                         <input type="hidden" name="_token" :value="csrfToken">
 
-                        <button class="button--link Navbar__link" type="submit">Logout</button>
+                        <button class="button--link navbar__link" type="submit">Logout</button>
                     </form>
                 </li>
-                <router-link to="/login" tag="li" v-else><a class="Navbar__link">Login</a></router-link>
+                <router-link to="/login" tag="li" v-else><a class="navbar__link">Login</a></router-link>
             </ul>
         </nav>
 
