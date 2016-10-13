@@ -10,14 +10,16 @@
         </div>
         <div slot="body">
             <form @submit.prevent="edit" @keyup.enter="hotkeySubmit">
-                <div class="input-group">
-                    <label class="label" for="journal.contents">Journal Contents</label>
-                    <textarea class="textarea" v-model="journal.contents" name="journal.contents" id="journal.contents"></textarea>
+                <div :class="['input-group', journal.errors.contents ? 'input-group--has-error' : '']">
+                    <label class="input-label" for="journal.contents">Journal Contents</label>
+                    <textarea class="input-field" rows="10" v-model="journal.contents" name="journal.contents" id="journal.contents"></textarea>
+                    <span class="input-error" v-for="error in journal.errors.contents" v-text="error"></span>
                 </div>
 
-                <div class="input-group">
-                    <label class="label" for="special.events">Special Events</label>
-                    <textarea class="textarea" v-model="journal.events" name="special.events" id="special.events"></textarea>
+                <div :class="['input-group', journal.errors.events ? 'input-group--has-error' : '']">
+                    <label class="input-label" for="journal.events">Special Events</label>
+                    <textarea class="input-field" rows="5" v-model="journal.events" name="journal.events" id="journal.events"></textarea>
+                    <span class="input-error" v-for="error in journal.errors.events" v-text="error"></span>
                 </div>
             </form>
         </div>

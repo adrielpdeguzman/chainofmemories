@@ -1,5 +1,30 @@
 // Import packaged vendor CSS.
 @import "vendors.css"
-
-// Import utility classes.
+@import "colors"
+@import "components/input"
+@import "components/button"
+@import "components/panel"
+@import "components/navbar"
+@import "pages/journals"
 @import "utilities"
+
+body
+    background: #eee
+    color: $text-color    
+    font-size: 14px
+    line-height: 1.6
+    padding-top: $navbar-height
+
+a
+    color: $brand-color
+    text-decoration: none
+    
+    &:hover
+        color: darken($brand-color, 10%)
+        text-decoration: underline
+
+.App
+    margin: auto
+    padding: 0
+    max-width: 833px
+    min-width: 480px

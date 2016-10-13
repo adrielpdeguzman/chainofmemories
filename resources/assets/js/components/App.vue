@@ -1,17 +1,27 @@
 <template>
     <div class="App">
-        <nav>
-            <router-link to="/">Home</router-link>
-            <router-link to="/login" v-if="!user.isAuthenticated">Login</router-link>
-            <router-link to="/journals" v-if="user.isAuthenticated">Journals</router-link>
+        <nav class="navbar">
+            <ul class="navbar__brand">
+                <router-link to="/" tag="li"><a class= "navbar__link">Chain of Memories</a></router-link>
+            </ul>
 
-            <form method="post" action="/logout" v-if="user.isAuthenticated">
-                <input type="hidden" name="_token" :value="csrfToken">
-                <button class="button--link" type="submit">Logout</button>
-            </form>
+            <ul class="navbar__left-links" v-if="user.isAuthenticated">
+                <router-link to="/journals" tag="li"><a class="navbar__link">Journals</a></router-link>
+            </ul>
+
+            <ul class="navbar__right-links">
+                <li v-if="user.isAuthenticated">
+                    <form method="post" action="/logout">
+                        <input type="hidden" name="_token" :value="csrfToken">
+
+                        <button class="button--link navbar__link" type="submit">Logout</button>
+                    </form>
+                </li>
+                <router-link to="/login" tag="li" v-else><a class="navbar__link">Login</a></router-link>
+            </ul>
         </nav>
 
-        <div class="container">
+        <div class="Body">
             <router-view></router-view>
         </div>
 

@@ -1,0 +1,46 @@
+$navbar-height = 50px
+
+.navbar
+    background-color: $brand-color
+    display: flex
+    margin: 0 -9999rem;
+    padding: 0 9999rem;
+    position: fixed;
+    top: 0
+    width: 833px
+
+    > ul
+        list-style: none
+        padding-left: 0
+        
+        > li
+            display: inline
+        
+    &__brand
+        flex: 1
+        
+    &__left-links
+        flex: 3
+        
+        > li
+            padding-right: 20px
+
+    &__right-links
+        display: flex
+        flex: 1
+        justify-content: flex-end
+        
+    &__link
+        color: #fff
+        
+        &:hover
+            color: #eee
+            text-decoration: none
+
+@media screen and (max-width: 480px)
+    .navbar
+        flex-direction: column
+
+        &__left-links
+        &__right-links
+            flex-direction: column

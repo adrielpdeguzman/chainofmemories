@@ -6,6 +6,12 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="/css/app.css" rel="stylesheet">
+
+    @if ($errors->has('username'))
+        <script>
+            window.loginError = '{{ $errors->first('username') }}'
+        </script>
+    @endif
 </head>
 <body>
     <div id="app"></div>
