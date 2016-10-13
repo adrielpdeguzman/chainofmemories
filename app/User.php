@@ -2,12 +2,13 @@
 
 namespace App;
 
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'username', 'password',
     ];
 
     /**
@@ -26,4 +27,26 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the journals of the user.
+     *
+     * @return Illuminate\Database\Eloquent\hasMany
+     */
+    public function journals()
+    {
+        return $this->hasMany('App\Journal');
+    }
+
+    /**
+     * Configure passport to use 'username' as username.
+     *
+     * @param string $username
+     *
+     * @return User
+     */
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)->first();
+    }
 }

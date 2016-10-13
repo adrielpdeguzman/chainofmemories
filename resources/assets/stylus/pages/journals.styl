@@ -1,0 +1,29 @@
+.Journal
+    display: flex
+    flex-direction: row
+    justify-content: center
+    
+    .Journal__sidebar
+        flex: 0 1 240px
+            
+    .Journal__links
+        font-size: 15px
+        list-style: none
+        padding-left: 0
+
+    .Journal__list
+        flex: 1
+        margin-left: 20px
+
+@media screen and (max-width: 480px)
+    .Journal
+        flex-direction: column
+        
+    .Journal__sidebar
+        flex: 1 0 auto
+    
+        > .panel
+            position: relative
+
+    .Journal__list
+        margin-left: 0

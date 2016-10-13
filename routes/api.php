@@ -15,4 +15,18 @@ use Illuminate\Http\Request;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
+});
+
+Route::group(['prefix' => 'journals', 'as' => 'journals.'], function () {
+    Route::get('random', 'JournalController@random')
+        ->name('random');
+    Route::get('dates_without_entry', 'JournalController@getDatesWithoutEntry')
+        ->name('dates_without_entry');
+    Route::get('volumes_with_start_dates', 'JournalController@getVolumesWithStartDates')
+        ->name('volumes_with_start_dates');
+});
+
+Route::singularResourceParameters();
+Route::resource('journals', 'JournalController', ['only' => [
+    'index', 'store', 'show', 'update',
+]]);

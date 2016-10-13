@@ -1,0 +1,26 @@
+.button
+    background: $button-bg-color
+    border-radius: 5px
+    border: 1px solid $button-border-color
+    color: $text-color
+    cursor: pointer
+    display: inline-block
+    font-size: 14px
+    padding: 8px 16px
+    
+    &--link
+        background: transparent
+        border: none
+        border-radius: 0
+        color: $brand-color
+        cursor: pointer
+        display: inline
+        font: inherit
+        padding: 0
+        
+        &:hover
+            text-decoration: underline
+    
+    &--primary
+        background: $brand-color
+        color: #fff

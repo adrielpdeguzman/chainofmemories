@@ -3,7 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -27,8 +31,7 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
-     * @return void
+     * @param \Exception $exception
      */
     public function report(Exception $exception)
     {
@@ -38,20 +41,60 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $exception
+     *
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        if ($request->expectsJson()) {
+            if ($e instanceof AuthorizationException) {
+                $response = [
+                    'message' => $e->getMessage(),
+                    'status' => Response::HTTP_FORBIDDEN,
+                ];
+            } elseif ($e instanceof ModelNotFoundException) {
+                $response = [
+                    'message' => $e->getMessage(),
+                    'status' => Response::HTTP_NOT_FOUND,
+                ];
+            } elseif ($e instanceof AuthenticationException) {
+                $response = [
+                    'message' => $e->getMessage(),
+                    'status' => Response::HTTP_UNAUTHORIZED,
+                ];
+            } elseif ($e instanceof ValidationException) {
+                $response = [
+                    'message' => $e->validator->errors()->getMessages(),
+                    'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                ];
+            } else {
+                $response = [
+                    'message' => Response::$statusTexts[$e->getStatusCode()],
+                    'status' => $e->getStatusCode(),
+                ];
+            }
+
+            if ((bool) env('APP_DEBUG')) {
+                $response['debug'] = [
+                    'exception' => get_class($e),
+                    'trace' => $e->getTrace(),
+                ];
+            }
+
+            return response()->json(['error' => $response], $response['status']);
+        }
+
+        return parent::render($request, $e);
     }
 
     /**
      * Convert an authentication exception into an unauthenticated response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @param \Illuminate\Http\Request                 $request
+     * @param \Illuminate\Auth\AuthenticationException $exception
+     *
      * @return \Illuminate\Http\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
